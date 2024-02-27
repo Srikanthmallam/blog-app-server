@@ -19,18 +19,18 @@ app.use(
     origin: "https://blog-app-client-22gv.onrender.com",
   })
 );
-app.use(upload())
-app.use('/uploads',express.static(__dirname + '/uploads'))
+app.use(upload());
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
-app.use("/api/users", userRoutes)
-app.use("/api/posts",postRoutes)
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
-app.use(notFound)
-app.use(errorHandler)
+app.use(notFound);
+app.use(errorHandler);
 
 connect(process.env.MONGO_URI)
   .then(
-    app.listen(process.env.PORT || 5000, () =>
+    app.listen(process.env.PORT || 5000, "0.0.0.0", () =>
       console.log(`server started on port ${process.env.PORT}`)
     )
   )
