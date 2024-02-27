@@ -29,11 +29,23 @@ app.use(notFound);
 app.use(errorHandler);
 
 connect(process.env.MONGO_URI)
-  .then(
-    app.listen(process.env.PORT || 5000, "0.0.0.0", () =>
-      console.log(`server started on port ${process.env.PORT}`)
-    )
-  )
+  .then(() => {
+    const server = app.listen(process.env.PORT || 5000, "0.0.0.0", () => {
+      console.log(`Server started on port ${process.env.PORT || 5000}`);
+    });
+
+    // Increase timeout values
+    server.keepAliveTimeout = 120000; // 120 seconds
+    server.headersTimeout = 120000; // 120 seconds
+  })
   .catch((error) => {
-    console.log(error);
+    console.error("MongoDB connection error:", error);
   });
+  // .then(
+  //   app.listen(process.env.PORT || 5000, "0.0.0.0", () =>
+  //     console.log(`server started on port ${process.env.PORT}`)
+  //   )
+  // )
+  // .catch((error) => {
+  //   console.log(error);
+  // });
