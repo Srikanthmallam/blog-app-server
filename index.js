@@ -13,39 +13,22 @@ const {notFound,errorHandler} = require("./middleware/errorMiddleware")
 const app = express();
 app.use(express.json({extended:true}))
 app.use(express.urlencoded({extended:true}))
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://blog-app-client-22gv.onrender.com",
-  })
-);
-app.use(upload());
-app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use(cors({credentials:true,origin:"http://localhost:3000"}))
+app.use(upload())
+app.use('/uploads',express.static(__dirname + '/uploads'))
 
-app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/api/users", userRoutes)
+app.use("/api/posts",postRoutes)
 
-app.use(notFound);
-app.use(errorHandler);
+app.use(notFound)
+app.use(errorHandler)
 
 connect(process.env.MONGO_URI)
-  .then(() => {
-    const server = app.listen(process.env.PORT || 5000, "0.0.0.0", () => {
-      console.log(`Server started on port ${process.env.PORT || 5000}`);
-    });
-
-    // Increase timeout values
-    server.keepAliveTimeout = 120000; // 120 seconds
-    server.headersTimeout = 120000; // 120 seconds
-  })
+  .then(
+    app.listen(process.env.PORT || 5000, () =>
+      console.log(`server started on port ${process.env.PORT}`)
+    )
+  )
   .catch((error) => {
-    console.error("MongoDB connection error:", error);
+    console.log(error);
   });
-  // .then(
-  //   app.listen(process.env.PORT || 5000, "0.0.0.0", () =>
-  //     console.log(`server started on port ${process.env.PORT}`)
-  //   )
-  // )
-  // .catch((error) => {
-  //   console.log(error);
-  // });
