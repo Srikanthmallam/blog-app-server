@@ -16,8 +16,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(
   cors({
     credentials: true,
-    origin:
-      "https://65de501fb8183244e6041594--inspiring-sprite-9ee918.netlify.app",
+    origin: "*",
   })
 );
 app.use(upload())
