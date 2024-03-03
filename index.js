@@ -17,7 +17,7 @@ app.use(
   cors({
     credentials: true,
     origin:
-      "https://65e389215c008cfce03ec57a--inspiring-sprite-9ee918.netlify.app",
+      "https://65e42d1839f91d00085ed827--inspiring-sprite-9ee918.netlify.app/",
   })
 );
 app.use(upload())
